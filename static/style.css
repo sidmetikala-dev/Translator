@@ -1,0 +1,9 @@
+#inputBox {
+    width: 200px;
+    height: 100px;
+    display: inline-block;
+}
+
+#thumbsup:hover, #thumbsdown:hover{
+    transform: scale(1.25);
+}
