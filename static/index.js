@@ -10,6 +10,13 @@ let translation_id = null;
 
 async function translateText() {
     const englishText = document.getElementById("inputBox").value;
+    const beamSizeInput = document.getElementById("beamSize");
+    const beamSize = Number.parseInt(beamSizeInput.value, 10);
+    const payload = {
+        text: englishText,
+        beam_size: Number.isNaN(beamSize) || beamSize < 1 ? 3 : beamSize
+    };
+
     output.textContent = "Translating...";
     gif.style.display="none";
 
@@ -26,7 +33,7 @@ async function translateText() {
         headers: {
             'Content-Type': 'application/json'
         }, 
-        body: JSON.stringify({"text": englishText})
+        body: JSON.stringify(payload)
     })
 
     if (!response.ok) {
