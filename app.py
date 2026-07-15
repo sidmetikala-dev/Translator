@@ -49,7 +49,17 @@ def translate():
     text = data.get("text", "").strip()
     if not text:
         return jsonify({'error': 'No text provided'}), 400
-    translated_text = translate_text(bundle, text)
+
+    beam_size = data.get("beam_size", 3)
+    try:
+        beam_size = int(beam_size)
+    except (TypeError, ValueError):
+        beam_size = 3
+
+    if beam_size < 1:
+        beam_size = 1
+
+    translated_text = translate_text(bundle, text, beam_size=beam_size)
 
     if is_new_user:
         myCursor.execute(
